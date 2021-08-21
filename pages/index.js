@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { format, parseISO } from 'date-fns';
+
 import { blogPosts } from './../lib/data';
 
 export default function Home() {
@@ -12,24 +14,31 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1>Home Page</h1>
         <div>
-          <h3>Blog Posts</h3>
-          <div>
+          <h3 className="text-center text-blue-400 mb-4">Featured Posts</h3>
+          <div className="space-y-4">
             {blogPosts.map((post) => (
-              <div key={post.slug}>
-                <div>
-                  <Link href={`/post/${post.slug}`}>
-                    <a>{post.title}</a>
-                  </Link>
-                </div>
-                <div>{post.date.toString()}</div>
-                <div>{post.description}</div>
-              </div>
+              <ListOfBlogPosts key={post.slug} {...post} />
             ))}
           </div>
         </div>
       </main>
+    </div>
+  );
+}
+
+export function ListOfBlogPosts({ title, slug, date, description }) {
+  return (
+    <div className="border border-blue-100 rounded-lg p-4 shadow hover:shadow-md cursor-pointer transition duration-200 ease-in-out">
+      <h2 className="text-lg font-bold">
+        <Link href={`/post/${slug}`}>
+          <a>{title}</a>
+        </Link>
+      </h2>
+      <div className="font-extralight text-sm text-gray-600">
+        {format(parseISO(date), 'MMMM do, yyyy')}
+      </div>
+      <div>{description}</div>
     </div>
   );
 }

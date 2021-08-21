@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import { format, parseISO } from 'date-fns';
+
 import { blogPosts } from '../../lib/data';
 
 export default function Post(post) {
@@ -8,8 +10,10 @@ export default function Post(post) {
         <title>{post.title}</title>
       </Head>
       <div>
-        <h4>{post.title}</h4>
-        <div>{post.date}</div>
+        <h2 className="text-lg font-bold">{post.title}</h2>
+        <div className="font-extralight text-sm text-gray-600 border-b-2 border-blue-50">
+          {format(parseISO(post.date), 'MMMM do, yyyy')}
+        </div>
         <p>{post.description}</p>
       </div>
     </div>
