@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import Link from 'next/link';
+import { blogPosts } from './../lib/data';
 
 export default function Home() {
   return (
@@ -9,8 +11,24 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>Home Page</h1>
+      <main>
+        <h1>Home Page</h1>
+        <div>
+          <h3>Blog Posts</h3>
+          <div>
+            {blogPosts.map((post) => (
+              <div key={post.slug}>
+                <div>
+                  <Link href={`/post/${post.slug}`}>
+                    <a>{post.title}</a>
+                  </Link>
+                </div>
+                <div>{post.date.toString()}</div>
+                <div>{post.description}</div>
+              </div>
+            ))}
+          </div>
+        </div>
       </main>
     </div>
   );
